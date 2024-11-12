@@ -25,6 +25,9 @@ public class Ciudad{
     public int getId(){
         return this.id;
     }
+    public int getPosicionHeap(){
+        return this.posicionHeap;
+    }
     public void setPosicionCiudad(int i){
         this.posicionHeap = i;
     }

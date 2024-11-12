@@ -81,6 +81,12 @@ public class Heap<T> {
         }
     }
 
+    //preguntar si esto esta bien, deja de ser generico el heap
+    public void actualizar(Ciudad ciudad){
+        swap(ciudad.getPosicionHeap(), this.heapArr.size()-1, this.heapArr);
+        heapifyUp(this.heapArr.size() - 1);
+    }
+
     private void swap(int i, int j, ArrayList<T> arr) {
         T temp = arr.get(i);
         arr.set(i, arr.get(j));
@@ -106,5 +112,14 @@ public class Heap<T> {
             elemento2.setPosicionCiudad(j);
         }      
     }
+
+    public T getRaiz(){
+        return this.heapArr.get(0);
+    }
+
+    public int getSize(){
+        return this.heapArr.size();
+    }
+}
 }
 
