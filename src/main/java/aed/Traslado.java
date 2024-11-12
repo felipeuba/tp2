@@ -26,13 +26,6 @@ public class Traslado {
         return this.gananciaNeta;
     }
 
-    public void setPosicionGanancia(int i) {
-        this.posicionGanancia = i;
-    }
-
-    public void setPosicionTimestamp(int i) {
-        this.posicionTimestamp = i;
-    }
     public int getPosicionGanancia() {
         return this.posicionGanancia;
     }
@@ -40,4 +33,16 @@ public class Traslado {
     public int getPosicionTimestamp() {
         return this.posicionTimestamp;
     }
+    public int getId(){
+        return this.id;
+    }
+
+    public void setPosicionGanancia(int i) {
+        this.posicionGanancia = i;
+    }
+
+    public void setPosicionTimestamp(int i) {
+        this.posicionTimestamp = i;
+    }
 }
+
