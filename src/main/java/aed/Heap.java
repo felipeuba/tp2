@@ -48,20 +48,20 @@ public class Heap<T> {
         }
     }
 
-    private void agregar(ArrayList<T> datos){
+    public void agregar(ArrayList<T> datos){
         for(int i = 0; i < datos.size(); i++){
             this.heapArr.add(datos.get(i));
             heapifyUp(this.heapArr.size() - 1);
         }
     }
 
-    private void eliminar(){
+    public void eliminar(){
         swap(0, this.heapArr.size() - 1, this.heapArr);
         this.heapArr.remove(this.heapArr.size() - 1);
         heapify(0, this.heapArr);
     }
 
-    private void eliminarConIds(int[] arrIds){
+    public void eliminarConIds(int[] arrIds){
         int i = 0;
         while (i < arrIds.length) {
             if(this.comparator == CustomComparator.BY_GANANCIA){
