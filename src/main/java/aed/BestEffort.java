@@ -8,6 +8,8 @@ public class BestEffort {
     private Heap<Ciudad> mayorSuperavit;
     private ArrayList<Ciudad> mayorGanancia;
     private ArrayList<Ciudad> mayorPerdida;
+    private ArrayList<Integer> mayorGananciaIds;
+    private ArrayList<Integer> mayorPerdidaIds;
     private Ciudad[] ciudades;
     private Heap<Traslado> trasladosMasAntiguos;
     private Heap<Traslado> trasladosMasRedituables;
@@ -25,25 +27,30 @@ public class BestEffort {
         
         mayorGanancia = new ArrayList<>(cantCiudades);
         mayorPerdida = new ArrayList<>(cantCiudades);
+        mayorGananciaIds = new ArrayList<>(cantCiudades);
+        mayorPerdidaIds = new ArrayList<>(cantCiudades);
 
         
         for (Ciudad ciudad : ciudades) {
             mayorGanancia.add(ciudad);
             mayorPerdida.add(ciudad);
+            mayorGananciaIds.add(ciudad.getId());
+            mayorPerdidaIds.add(ciudad.getId());
         }
 
         
         gananciaTotal = new int[]{0, 0}; 
 
 
-        ArrayList<Traslado> trasladosarr = new ArrayList<Traslado>(Arrays.asList(traslados));
+        ArrayList<Traslado> trasladosGanancia = new ArrayList<Traslado>(Arrays.asList(traslados));
+        ArrayList<Traslado> trasladosTimestamp = new ArrayList<Traslado>(Arrays.asList(traslados));
         ArrayList<Ciudad> ciudadesarr = new ArrayList<Ciudad>(Arrays.asList(ciudades));
 
 
         
         mayorSuperavit = new Heap<>(ciudadesarr, CustomComparator.BY_BALANCE);  
-        trasladosMasAntiguos = new Heap<>(trasladosarr, CustomComparator.BY_TIMESTAMP);  
-        trasladosMasRedituables = new Heap<>(trasladosarr, CustomComparator.BY_GANANCIA);  
+        trasladosMasRedituables = new Heap<>(trasladosGanancia, CustomComparator.BY_GANANCIA);  
+        trasladosMasAntiguos = new Heap<>(trasladosTimestamp, CustomComparator.BY_TIMESTAMP);  
     }
 
     
@@ -67,18 +74,28 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
         if (mayorGanancia.get(0).getGanancia() < ciudades[traslados[j].origen].getGanancia()) {
             
             mayorGanancia.clear();  
-            mayorGanancia.add(ciudades[traslados[j].origen]);  
+            mayorGananciaIds.clear();
+            mayorGanancia.trimToSize();
+            mayorGananciaIds.trimToSize();  
+            mayorGanancia.add(ciudades[traslados[j].origen]); 
+            mayorGananciaIds.add(ciudades[traslados[j].origen].getId());  
         } else if (mayorGanancia.get(0).getGanancia() == ciudades[traslados[j].origen].getGanancia()) {
-            
+            mayorGananciaIds.add(ciudades[traslados[j].origen].getId());
             mayorGanancia.add(ciudades[traslados[j].origen]);
         }
 
         
-        if (mayorPerdida.get(0).getPerdida() < ciudades[traslados[j].origen].getPerdida()) {
-            mayorPerdida.clear();nuevoArreglo.add(ciudades[traslados[j].origen]);
-            mayorPerdida.add(ciudades[traslados[j].origen]);
-        } else if (mayorPerdida.get(0).getPerdida() == ciudades[traslados[j].origen].getPerdida()) {
-            mayorPerdida.add(ciudades[traslados[j].origen]);
+        if (mayorPerdida.get(0).getPerdida() < ciudades[traslados[j].destino].getPerdida()) {
+            mayorPerdida.clear();  
+            mayorPerdidaIds.clear();
+            mayorPerdida.trimToSize();
+            mayorPerdidaIds.trimToSize();  
+            mayorPerdida.add(ciudades[traslados[j].destino]); 
+            mayorPerdidaIds.add(ciudades[traslados[j].destino].getId()); 
+
+        } else if (mayorPerdida.get(0).getPerdida() == ciudades[traslados[j].destino].getPerdida()) {
+            mayorPerdidaIds.add(ciudades[traslados[j].destino].getId());
+            mayorPerdida.add(ciudades[traslados[j].destino]);
         }
 
         
@@ -167,24 +184,27 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
     }
 
     public int ciudadConMayorSuperavit(){
-        
-        return 0;
+        return this.mayorSuperavit.getRaiz().getId();
     }
 
     public ArrayList<Integer> ciudadesConMayorGanancia(){
         
-        return null;
+        return this.mayorGananciaIds;
     }
 
     public ArrayList<Integer> ciudadesConMayorPerdida(){
         
-        return null;
+        return this.mayorPerdidaIds;
     }
 
     public int gananciaPromedioPorTraslado(){
         
-        return 0;
+        return (int) (this.gananciaTotal[0] / gananciaTotal[1]);
     }
+    
+}
+
+
     
 }
 
