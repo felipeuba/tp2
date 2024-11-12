@@ -16,6 +16,12 @@ public class Ciudad{
     public int getBalance(){
         return this.balance;
     }
+    public int getPerdida(){
+        return this.perdida;
+    }
+    public int getGanancia(){
+        return this.ganancia;
+    }
     public int getId(){
         return this.id;
     }
@@ -24,5 +30,17 @@ public class Ciudad{
     }
     public void setPosicionCiudad(int i){
         this.posicionHeap = i;
+    }
+    public void setGanancia(int n){
+        this.ganancia += n;
+    }
+    public void setPerdida(int n){
+        this.perdida += n;
+    }
+    public void sumarBalance(int n){
+        this.balance += n;
+    }
+    public void restarBalance(int n){
+        this.balance -= n;
     }
 }
