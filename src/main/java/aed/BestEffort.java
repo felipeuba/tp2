@@ -74,7 +74,7 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
         }
 
         // Verificar para mayorPerdida de la misma manera
-        if (mayorPerdida.get(0).getPerdida() <Update Ciudad.java ciudades[traslados[j].origen].getPerdida()) {
+        if (mayorPerdida.get(0).getPerdida() < ciudades[traslados[j].origen].getPerdida()) {
             mayorPerdida.clear();
             mayorPerdida.add(ciudades[traslados[j].origen]);
         } else if (mayorPerdida.get(0).getPerdida() == ciudades[traslados[j].origen].getPerdida()) {
