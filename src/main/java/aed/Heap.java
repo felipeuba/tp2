@@ -78,6 +78,7 @@ public class Heap<T> {
                 this.heapArr.remove(this.heapArr.size() - 1);
                 heapify(posicion, this.heapArr);
             }
+            i++;
         }
     }
 
@@ -121,5 +122,5 @@ public class Heap<T> {
         return this.heapArr.size();
     }
 }
-}
+
 
