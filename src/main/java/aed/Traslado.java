@@ -33,4 +33,11 @@ public class Traslado {
     public void setPosicionTimestamp(int i) {
         this.posicionTimestamp = i;
     }
+    public int getPosicionGanancia() {
+        return this.posicionGanancia;
+    }
+
+    public int getPosicionTimestamp() {
+        return this.posicionTimestamp;
+    }
 }
