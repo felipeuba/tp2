@@ -63,7 +63,7 @@ public class Heap<T> {
 
     public void eliminarConIds(int[] arrIds){
         int i = 0;
-        while (i < arrIds.length) {
+        for (int i = arrIds.length - 1; i >= 0; i--)  {
             if(this.comparator == CustomComparator.BY_GANANCIA){
                 Traslado trasladoAEliminar = (Traslado) this.heapArr.get(i);
                 int posicion = trasladoAEliminar.getPosicionGanancia();
@@ -78,7 +78,6 @@ public class Heap<T> {
                 this.heapArr.remove(this.heapArr.size() - 1);
                 heapify(posicion, this.heapArr);
             }
-            i++;
         }
     }
 
