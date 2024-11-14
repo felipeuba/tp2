@@ -18,6 +18,7 @@ public class Heap<T> {
         for(int i = arr.size()/2 - 1; i >= 0; i--){
             heapify(i, arr);
         }
+        updatePositions(arr);
         return arr;
     }
 
@@ -37,6 +38,8 @@ public class Heap<T> {
             heapify(largest, arr);
         }
     }
+
+
 
     private void heapifyUp(int i){
         int padre = (i - 1) / 2;
@@ -61,20 +64,19 @@ public class Heap<T> {
         heapify(0, this.heapArr);
     }
 
-    public void eliminarConIds(int[] arrIds){
-        int i = 0;
-        for (int i = arrIds.length - 1; i >= 0; i--)  {
+    public void eliminarConIds(Traslado[] arrTraslados){
+        for (int i = arrTraslados.length - 1; i >= 0; i--)  {
             if(this.comparator == CustomComparator.BY_GANANCIA){
-                Traslado trasladoAEliminar = (Traslado) this.heapArr.get(i);
+                Traslado trasladoAEliminar = (Traslado) this.heapArr.get(arrTraslados[i].getPosicionGanancia());
                 int posicion = trasladoAEliminar.getPosicionGanancia();
-                swap(this.heapArr.size() - 1, trasladoAEliminar.getPosicionGanancia(), this.heapArr);
+                swap(this.heapArr.size() - 1, posicion, this.heapArr);
                 this.heapArr.remove(this.heapArr.size() - 1);
                 heapify(posicion, this.heapArr);
             }
             if(this.comparator == CustomComparator.BY_TIMESTAMP){
-                Traslado trasladoAEliminar = (Traslado) this.heapArr.get(i);
+                Traslado trasladoAEliminar = (Traslado) this.heapArr.get(arrTraslados[i].getPosicionTimestamp());
                 int posicion = trasladoAEliminar.getPosicionTimestamp();
-                swap(this.heapArr.size() - 1, trasladoAEliminar.getPosicionTimestamp(), this.heapArr);
+                swap(this.heapArr.size() - 1, posicion, this.heapArr);
                 this.heapArr.remove(this.heapArr.size() - 1);
                 heapify(posicion, this.heapArr);
             }
@@ -111,6 +113,23 @@ public class Heap<T> {
             Ciudad elemento2 = (Ciudad) arr.get(j);
             elemento2.setPosicionCiudad(j);
         }      
+    }
+
+    private void updatePositions(ArrayList<T> arr){
+        for (int i = 0; i < arr.size(); i++) {
+            if(this.comparator == CustomComparator.BY_GANANCIA){
+                Traslado elemento = (Traslado) arr.get(i);
+                elemento.setPosicionGanancia(i);
+            }
+            if(this.comparator == CustomComparator.BY_TIMESTAMP){
+                Traslado elemento = (Traslado) arr.get(i);
+                elemento.setPosicionTimestamp(i);
+            }
+            if(this.comparator == CustomComparator.BY_BALANCE){
+                Ciudad elemento = (Ciudad) arr.get(i);
+                elemento.setPosicionCiudad(i);
+            }
+        }
     }
 
     public T getRaiz(){
