@@ -56,7 +56,7 @@ public class BestEffort {
     
 private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
     int j = 0;
-    ArrayList<Ciudad> nuevoArreglo = new ArrayList<>();  
+ 
 
     while (j < traslados.length) {
         gananciaTotal[0] = gananciaTotal[0] + traslados[j].getGananciaNeta();
@@ -72,44 +72,43 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
 
         
         if (mayorGanancia.get(0).getGanancia() < ciudades[traslados[j].origen].getGanancia()) {
-            
-            mayorGanancia.clear();  
-            mayorGananciaIds.clear();
-            mayorGanancia.trimToSize();
-            mayorGananciaIds.trimToSize();  
-            mayorGanancia.add(ciudades[traslados[j].origen]); 
-            mayorGananciaIds.add(ciudades[traslados[j].origen].getId());  
+            this.mayorGanancia = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen])); 
+            this.mayorGananciaIds = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen].getId())); 
+
         } else if (mayorGanancia.get(0).getGanancia() == ciudades[traslados[j].origen].getGanancia()) {
-            mayorGananciaIds.add(ciudades[traslados[j].origen].getId());
-            mayorGanancia.add(ciudades[traslados[j].origen]);
+            if (mayorGanancia.get(0).getId() != ciudades[traslados[j].origen].getId()){
+                mayorGananciaIds.add(ciudades[traslados[j].origen].getId());
+                mayorGanancia.add(ciudades[traslados[j].origen]);
+            } else {
+                this.mayorGanancia = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen])); 
+                this.mayorGananciaIds = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen].getId())); 
+            }
         }
 
         
         if (mayorPerdida.get(0).getPerdida() < ciudades[traslados[j].destino].getPerdida()) {
-            mayorPerdida.clear();  
-            mayorPerdidaIds.clear();
-            mayorPerdida.trimToSize();
-            mayorPerdidaIds.trimToSize();  
-            mayorPerdida.add(ciudades[traslados[j].destino]); 
-            mayorPerdidaIds.add(ciudades[traslados[j].destino].getId()); 
+            this.mayorPerdida = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen])); 
+            this.mayorPerdidaIds = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen].getId())); 
 
         } else if (mayorPerdida.get(0).getPerdida() == ciudades[traslados[j].destino].getPerdida()) {
-            mayorPerdidaIds.add(ciudades[traslados[j].destino].getId());
-            mayorPerdida.add(ciudades[traslados[j].destino]);
-        }
+            if (mayorPerdida.get(0).getId() != ciudades[traslados[j].destino].getId()){
+                mayorPerdidaIds.add(ciudades[traslados[j].destino].getId());
+                mayorPerdida.add(ciudades[traslados[j].destino]);
+            } else {
+                this.mayorPerdida = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen])); 
+                this.mayorPerdidaIds = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen].getId())); 
+            }
 
         
-        ciudades[traslados[j].origen].sumarBalance (traslados[j].gananciaNeta);
-        ciudades[traslados[j].destino].restarBalance (traslados[j].gananciaNeta);
 
         
         this.mayorSuperavit.actualizar(ciudades[traslados[j].origen]);
         this.mayorSuperavit.actualizar(ciudades[traslados[j].destino]);
 
-        j++;
+        
+        }
+    j++;
     }
-    
-
     
 }
 
@@ -131,7 +130,7 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
         if (n > trasladosMasRedituables.getSize()) {  
             while (i < trasladosMasRedituables.getSize()) {
                 
-                res[i] = trasladosMasRedituables.getRaiz().getId();  
+                res[i] = trasladosMasRedituables.getRaiz().getPosicionTimestamp();  
                 listaDeTraslados[i] = trasladosMasRedituables.getRaiz();
                 trasladosMasRedituables.eliminar();
                 i++;
@@ -140,7 +139,7 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
             
             while (i < n) {
                 
-                res[i] = trasladosMasRedituables.getRaiz().getId();  
+                res[i] = trasladosMasRedituables.getRaiz().getPosicionTimestamp();  
                 listaDeTraslados[i] = trasladosMasRedituables.getRaiz();
                 trasladosMasRedituables.eliminar();
                 i++;
@@ -148,7 +147,7 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
         }
         actualizarCiudades(ciudades, listaDeTraslados);
 
-        this.trasladosMasAntiguos.eliminarConIds(res);
+        this.trasladosMasAntiguos.eliminarConIds(listaDeTraslados);
         return res;                 
     }
 
@@ -162,7 +161,7 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
         if (n > trasladosMasAntiguos.getSize()) {  
             while (i < trasladosMasAntiguos.getSize()) {
                 
-                res[i] = trasladosMasAntiguos.getRaiz().getId();  
+                res[i] = trasladosMasAntiguos.getRaiz().getPosicionGanancia();  
                 listaDeTraslados[i] = trasladosMasAntiguos.getRaiz();
                 trasladosMasAntiguos.eliminar();
                 i++;
@@ -171,7 +170,7 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
             
             while (i < n) {
                 
-                res[i] = trasladosMasAntiguos.getRaiz().getId();  
+                res[i] = trasladosMasAntiguos.getRaiz().getPosicionGanancia();  
                 listaDeTraslados[i] = trasladosMasAntiguos.getRaiz();
                 trasladosMasAntiguos.eliminar();
                 i++;
@@ -179,7 +178,7 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
         }
         actualizarCiudades(ciudades, listaDeTraslados);
 
-        this.trasladosMasRedituables.eliminarConIds(res);
+        this.trasladosMasRedituables.eliminarConIds(listaDeTraslados);
         return res;                 
     }
 
@@ -203,8 +202,3 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
     }
     
 }
-
-
-    
-}
-
