@@ -87,26 +87,20 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
 
         
         if (mayorPerdida.get(0).getPerdida() < ciudades[traslados[j].destino].getPerdida()) {
-            this.mayorPerdida = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen])); 
-            this.mayorPerdidaIds = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen].getId())); 
+            this.mayorPerdida = new ArrayList<>(Arrays.asList(ciudades[traslados[j].destino])); 
+            this.mayorPerdidaIds = new ArrayList<>(Arrays.asList(ciudades[traslados[j].destino].getId())); 
 
         } else if (mayorPerdida.get(0).getPerdida() == ciudades[traslados[j].destino].getPerdida()) {
             if (mayorPerdida.get(0).getId() != ciudades[traslados[j].destino].getId()){
                 mayorPerdidaIds.add(ciudades[traslados[j].destino].getId());
                 mayorPerdida.add(ciudades[traslados[j].destino]);
             } else {
-                this.mayorPerdida = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen])); 
-                this.mayorPerdidaIds = new ArrayList<>(Arrays.asList(ciudades[traslados[j].origen].getId())); 
+                this.mayorPerdida = new ArrayList<>(Arrays.asList(ciudades[traslados[j].destino])); 
+                this.mayorPerdidaIds = new ArrayList<>(Arrays.asList(ciudades[traslados[j].destino].getId())); 
             }
-
-        
-
-        
-        this.mayorSuperavit.actualizar(ciudades[traslados[j].origen]);
-        this.mayorSuperavit.actualizar(ciudades[traslados[j].destino]);
-
-        
-        }
+        }           
+    this.mayorSuperavit.actualizar(ciudades[traslados[j].origen]);
+    this.mayorSuperavit.actualizar(ciudades[traslados[j].destino]);
     j++;
     }
     
