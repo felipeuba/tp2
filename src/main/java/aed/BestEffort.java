@@ -117,11 +117,14 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
     public int[] despacharMasRedituables(int n) {
         int i = 0;
         
-        int[] res = new int[n];
-        Traslado[] listaDeTraslados = new Traslado[n];
+        int[] res;
+        Traslado[] listaDeTraslados;
     
         
         if (n > trasladosMasRedituables.getSize()) {  
+            int tamHeap = this.trasladosMasRedituables.getSize(); 
+            res =  new int[tamHeap];
+            listaDeTraslados =  new Traslado[tamHeap];
             while (i < trasladosMasRedituables.getSize()) {
                 
                 res[i] = trasladosMasRedituables.getRaiz().getPosicionTimestamp();  
@@ -130,7 +133,8 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
                 i++;
             }
         } else {
-            
+            res =  new int[n];
+            listaDeTraslados =  new Traslado[n];
             while (i < n) {
                 
                 res[i] = trasladosMasRedituables.getRaiz().getPosicionTimestamp();  
@@ -147,12 +151,13 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
 
     public int[] despacharMasAntiguos(int n){
         int i = 0;
+        int[] res;
+        Traslado[] listaDeTraslados;
         
-        int[] res = new int[n];
-        Traslado[] listaDeTraslados = new Traslado[n];
-    
-        
-        if (n > trasladosMasAntiguos.getSize()) {  
+        if (n > trasladosMasAntiguos.getSize()) { 
+            int tamHeap = this.trasladosMasAntiguos.getSize(); 
+            res =  new int[tamHeap];
+            listaDeTraslados =  new Traslado[tamHeap]; 
             while (i < trasladosMasAntiguos.getSize()) {
                 
                 res[i] = trasladosMasAntiguos.getRaiz().getPosicionGanancia();  
@@ -161,7 +166,8 @@ private void actualizarCiudades(Ciudad[] ciudades, Traslado[] traslados) {
                 i++;
             }
         } else {
-            
+            res =  new int[n];
+            listaDeTraslados =  new Traslado[n]; 
             while (i < n) {
                 
                 res[i] = trasladosMasAntiguos.getRaiz().getPosicionGanancia();  
