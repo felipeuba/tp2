@@ -8,7 +8,6 @@ public class Heap<T> {
     private Comparator<T> comparator;
 
     // Heap<Traslado> heap = new Heap<>(traslados, CustomComparator.BY_GANANCIA);  asi mando un parametro
-
     public Heap(ArrayList<T> arr, Comparator<T> comparator){
         this.comparator = comparator;
         this.heapArr = floydInsert(arr);
@@ -39,11 +38,8 @@ public class Heap<T> {
         }
     }
 
-
-
     private void heapifyUp(int i){
         int padre = (i - 1) / 2;
-
         while(i > 0 && comparator.compare(this.heapArr.get(i), this.heapArr.get(padre)) > 0){
             swap(i, padre, this.heapArr);
             i = padre;
@@ -52,7 +48,7 @@ public class Heap<T> {
     }
 
     public void agregar(ArrayList<T> datos){
-        for(int i = 0; i < datos.size(); i++){
+        for(int i = 0; i < datos.size(); i++){ 
             this.heapArr.add(datos.get(i));
             heapifyUp(this.heapArr.size() - 1);
         }
@@ -83,7 +79,6 @@ public class Heap<T> {
         }
     }
 
-    //preguntar si esto esta bien, deja de ser generico el heap
     public void actualizar(Ciudad ciudad){
         swap(ciudad.getPosicionHeap(), this.heapArr.size()-1, this.heapArr);
         heapifyUp(this.heapArr.size() - 1);
