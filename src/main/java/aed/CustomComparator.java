@@ -12,7 +12,7 @@ public class CustomComparator {
     public static final Comparator<Ciudad> BY_BALANCE = (c1, c2) -> {
         int res = Integer.compare(c1.getBalance(), (c2.getBalance()));
         if (res == 0){
-            return Integer.compare(c1.getId(), (c2.getId()));
+            return Integer.compare( - (c1.getId()), - (c2.getId()));
         }
         return res;
     };
